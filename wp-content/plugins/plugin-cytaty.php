@@ -11,9 +11,10 @@ License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
+require_once('dev-utils.php');
 
 
-function saternus_plugin_cytaty(){
+function saternus_plugin_get_cytaty(){
 
     $quotes = [
         'Cytay 1',
@@ -27,4 +28,8 @@ function saternus_plugin_cytaty(){
 
 }
 
-//echo saternus_plugin_cytaty();
+function saternus_plugin_cytaty(){
+    $quote = saternus_plugin_get_cytaty();
+    my_log($quote);
+    echo '<p> "'.$quote.'"</p>';
+}
