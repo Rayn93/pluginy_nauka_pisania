@@ -1,28 +1,34 @@
 <?php
-    /*
-        Template Name: Wyszukiwanie po składnikach
-    */
+/*
+
+	Template Name: Wyszukiwanie po składnikach
+
+*/
 ?>
 
-<?php
-    $search_ingr = TRUE;
 
-    if(isset($_GET['ingredients'])){
-        $ingedients = array_keys($_GET['ingredients']);
+<?php 
+
+	$search_ingr = true;
+
+	if(isset($_GET['ingredients'])){
+        $ingredients = array_keys($_GET['ingredients']);
     }else{
-        $ingedients = array();
+        $ingredients = array();
     }
-
-    $loop = new WP_Query(array(
-        'post_type' => 'recipes',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'ingredients',
-                'field' => 'slug',
-                'terms' => $ingedients
-            )
-        )
-    ));
-    
-    get_template_part('content', 'recipes');
+	
+	$loop = new WP_Query(array(
+		'post_type' => 'recipes',
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'ingredients',
+				'field' => 'slug',
+				'terms' => $ingredients
+			)
+		)
+	));
+	
+	get_template_part('archive', 'recipes');
+	
+	
 ?>

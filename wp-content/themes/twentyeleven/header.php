@@ -134,6 +134,7 @@
 				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 			</nav><!-- #access -->
 	</header><!-- #branding -->
-
+	
+	<h1>Sprawdzanie nadpisywania motywu!</h1>
 
 	<div id="main">

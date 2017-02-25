@@ -7,8 +7,8 @@
 
 <script>var IMG_URL = '<?php echo LOVETOEAT_THEME_URL.'img/'; ?>';</script>
 
-<a class="nav left" href="<?php echo get_permalink(get_adjacent_post(false,'',false)); ?>">&lAarr;</a>
-<a class="nav right" href="<?php echo get_permalink(get_adjacent_post(false,'',true)); ?>">&lAarr;</a>
+<a class="nav left" href="<?php echo get_permalink(get_adjacent_post(false,'',true)); ?>">&lAarr;</a>
+<a class="nav right" href="<?php echo get_permalink(get_adjacent_post(false,'',false)); ?>">&lAarr;</a>
 
 
 <div id="details">

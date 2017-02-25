@@ -122,31 +122,31 @@ body > header nav .sub-menu li a{
     border-bottom: 1px dashed #3e1c09;
 }
 
-body > header nav .sub-menu li.lunch a{
+body > header nav .sub-menu li.przystawka a{
     background-image: url('../img/submenu-icon-dinner.png');
 }
 
-body > header nav .sub-menu li.breakfast a{
+body > header nav .sub-menu li.obiad a{
     background-image: url('../img/submenu-icon-bread.png');
 }
 
-body > header nav .sub-menu li.snacks a{
+body > header nav .sub-menu li.przekaski a{
     background: url('../img/submenu-icon-snacks.png') 12px 10px no-repeat;
 }
 
-body > header nav .sub-menu li.desserts a{
+body > header nav .sub-menu li.drinki a{
     background: url('../img/submenu-icon-desserts.png') 12px 8px no-repeat;
 }
 
-body > header nav .sub-menu li.drinks a{
+body > header nav .sub-menu li.bezalkoholowe a{
     background-image: url('../img/submenu-icon-drinks.png');
 }
 
-body > header nav .sub-menu li.all{
+body > header nav .sub-menu li.wszystkie{
     margin: 0px;
 }
 
-body > header nav .sub-menu li.all a{
+body > header nav .sub-menu li.wszystkie a{
     background: #f55b0c;
     padding: 5px 0px 0px;
     height: 26px;
@@ -156,7 +156,7 @@ body > header nav .sub-menu li.all a{
     text-align: center;
 }
 
-body > header nav .sub-menu li.all a span{
+body > header nav .sub-menu li.wszystkie a span{
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -182,17 +182,17 @@ body > header nav .sub-menu li.all a span{
     position: relative;
 }
 
-#header .gradient{
-    background: url('../img/top-caption-grad-patt.png') left bottom repeat-x;
-    position: relative;
-    z-index: 9;
-}
+			#header .gradient{
+				background: url('../img/top-caption-grad-patt.png') left bottom repeat-x;
+				position: relative;
+				z-index: 9;
+			}
 
-#header .gradient .pos-center{
-    background: url('../img/top-caption-grad-cnt.png') center bottom no-repeat;
-    width: 900px;
-    height: 10px;
-}
+			#header .gradient .pos-center{
+				background: url('../img/top-caption-grad-cnt.png') center bottom no-repeat;
+				width: 900px;
+				height: 10px;
+			}
 
 
 /* header caption general styles */
@@ -204,24 +204,24 @@ body > header nav .sub-menu li.all a span{
     font-size: 24px;
 }
 
-#header .caption .left{
-    float: left;
-    width: 689px;
-    height: 82px;
-    border-right: 1px dashed #515150;
-    overflow: hidden;
-}
+			#header .caption .left{
+				float: left;
+				width: 689px;
+				height: 82px;
+				border-right: 1px dashed #515150;
+				overflow: hidden;
+			}
 
-#header .caption .right{
-    float: right;
-    width: 340px;
-    height: 67px; 
-}
+			#header .caption .right{
+				float: right;
+				width: 340px;
+				height: 67px; 
+			}
 
-#header .caption h2{
-    padding-top: 30px;
-    padding-left: 15px;
-}
+			#header .caption h2{
+				padding-top: 30px;
+				padding-left: 15px;
+			}
 
 
 /* header caption search form styles */
@@ -707,23 +707,23 @@ body > header nav .sub-menu li.all a span{
     text-align: left;
 }
 
-#header .fridge-form .submenu .vegetables{
+#header .fridge-form .submenu .mieso{
     width: 230px;
 }
 
-#header .fridge-form .submenu .meat{
+#header .fridge-form .submenu .owoce{
     width: 115px;
 }
 
-#header .fridge-form .submenu .fish{
+#header .fridge-form .submenu .ryby{
     width: 115px;
 }
 
-#header .fridge-form .submenu .fruits{
+#header .fridge-form .submenu .warzywa{
     width: 230px;
 }
 
-#header .fridge-form .submenu .other{
+#header .fridge-form .submenu .przyprawy{
     width: 230px;
 }
 
@@ -1923,7 +1923,6 @@ ul.icons-list li.waiter{
     margin-right: 10px;
 }
 
-/*
  .widget.comments section{
     position: relative;
     margin-bottom: 45px;
@@ -1957,4 +1956,3 @@ ul.icons-list li.waiter{
  .widget.comments section blockquote{
     font-style: italic;
 }
-*/

@@ -1,3 +1,3 @@
 <div class="right">
-    <?php dynamic_sidebar('default-widgets'); ?>
-</div>
+					<?php dynamic_sidebar('default-widgets'); ?>
+</div>   

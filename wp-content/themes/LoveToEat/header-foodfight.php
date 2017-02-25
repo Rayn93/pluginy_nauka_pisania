@@ -8,33 +8,42 @@
         <?php endif; ?>
 
         <title>
-            <?php
-                
-            if (is_archive()) {
-                echo ucfirst(trim(wp_title('', FALSE))).' - ';
-            } else
-                
-            if (!(is_404()) && (is_single()) || (is_page())) {
-                $title = wp_title('', false);
-                if(!empty($title)){
-                    echo $title.' - ';
-                }
-            }
-
-            if (is_home()) {
-                bloginfo('name');
-                echo ' - ';
-                bloginfo('description');
-            } else {
-                bloginfo('name');
-            }
-
-            global $paged;
-            if ($paged > 1) {
-                echo ' - strona ' . $paged;
-            }
-            ?>
-        </title>
+		
+			<?php
+				//echo bloginfo('name');
+				//echo wp_title();
+				
+				if(is_archive()) {
+					echo ucfirst(trim(wp_title('', false))) . ' - ';
+				} else
+				
+				if(!(is_404()) && (is_single()) || (is_page())) {
+					$title = wp_title('', false);
+					if(!empty($title)) {
+						echo $title . ' - ';
+					}
+				} else
+				
+				if(is_404()) {
+					echo 'Nie znaleziono strony';
+				}
+				
+				if(is_home()) {
+					bloginfo('name');
+					echo ' - ';
+					bloginfo('description');
+				} else {
+					echo bloginfo('name');
+				}
+				
+				global $paged;
+				if($paged > 1) {
+					echo ' - strona ' . $paged;
+				}
+				
+			?>
+		
+		</title>
 
         <link rel="shortcut icon" href="/favicon.ico">
 

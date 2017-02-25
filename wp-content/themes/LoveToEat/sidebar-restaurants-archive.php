@@ -1,3 +1,3 @@
 <div class="right">
-    <?php dynamic_sidebar('restaurants-archive-widgets'); ?>
-</div>
+    <?php dynamic_sidebar('restants-archive-widget') ?>             
+</div> 

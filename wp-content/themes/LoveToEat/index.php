@@ -40,7 +40,8 @@
                 
                 <?php   
                     $query_params = getQueryParams();
-                    
+					//jak szablonem
+                    $query_params['post_type'] = 'post';
                     if(isset($query_params['search'])){
                         $query_params['post_title_like'] = $query_params['search'];
                         unset($query_params['search']);

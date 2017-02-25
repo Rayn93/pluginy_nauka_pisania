@@ -74,9 +74,7 @@
             
         );
         
-        register_post_type('restaurants', $restaurants_args);
-        
-        
+        register_post_type('restaurants', $restaurants_args); 
         
         /*
          * Register Food Fight Post Type
@@ -118,7 +116,7 @@
     
     add_action('init', 'lovetoeat_init_taxonomies');
     
-    
+    /* rejestruje taksonioemjeie*/
     
     function lovetoeat_init_taxonomies(){
         
@@ -127,6 +125,7 @@
             'ingredients',
             array('recipes'),
             array(
+				/* robimy jednak hieraerchiczne ponieważ wykorzystujemy w lodówce*/
                 'hierarchical' => true,
                 'labels' => array(
                     'name' => 'Składniki',
@@ -255,7 +254,8 @@
         
         ?>
 <style>
-    
+    /* po to żeby w panelu admina zmienić domyślne ikonki custom post types*//* dla menu */
+	
     #menu-posts-recipes .wp-menu-image,
     #menu-posts-restaurants .wp-menu-image,
     #menu-posts-foodfight .wp-menu-image{
@@ -291,7 +291,7 @@
     .icon32-posts-foodfight{
         background-position: center center!important;
     }
-    
+    /* dla posdtronyu*/
     .icon32-posts-recipes{
         background-image: url('<?php echo $ICON_URL.'icon-recipes-header.png' ?>')!important;
     }

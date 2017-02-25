@@ -2,14 +2,15 @@
 
     <div id="archive">
 
-        <?php
+        <?php	
             $query_params = getQueryParams();
             $query_params['posts_per_page'] = 8;
             
             $loop = new WP_Query($query_params);
-            
+					
             while($loop->have_posts()): 
-                $loop->the_post(); 
+                $loop->the_post();
+					
                 $title = explode('vs', get_the_title());
         ?>
             <a href="<?php the_permalink(); ?>" id="fight-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -25,9 +26,7 @@
         <?php endwhile; ?>
     </div>
 
-
     <a class="nav left" href="<?php echo previous_posts(TRUE); ?>">&lAarr;</a>
-
     <a class="nav right" href="<?php echo next_posts($loop->max_num_pages, TRUE); ?>">&rAarr;</a>
         
 <?php get_footer('foodfight'); ?>

@@ -12,13 +12,13 @@ $(document).ready(function(){
     var i = 3;
     var interval = setInterval(function(){
         
-        $('#details .timer .right img').attr('src', IMG_URL+'/counter_'+i+'.png');
+        $('#details .timer .right img').attr('src', IMG_URL+'counter_'+i+'.png');
         
         i--;
         
         if(i < 0){
             clearInterval(interval);
-            $('#details .timer img').attr('src', IMG_URL+'/counter_fist.png');
+            $('#details .timer img').attr('src', IMG_URL+'counter_fist.png');
             runAnimation();
             
         }
