@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'MuseoSlab500Regular';
+    src: url('../asset/Museo_Slab_500/Museo_Slab_500-webfont.eot');
+    src: url('../asset/Museo_Slab_500/Museo_Slab_500-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../asset/Museo_Slab_500/Museo_Slab_500-webfont.woff') format('woff'),
+        url('../asset/Museo_Slab_500/Museo_Slab_500-webfont.ttf') format('truetype'),
+        url('../asset/Museo_Slab_500/Museo_Slab_500-webfont.svg#MuseoSlab500Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SansationRegular';
+    src: url('../asset/Sansation/Sansation_Regular-webfont.eot');
+    src: url('../asset/Sansation/Sansation_Regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../asset/Sansation/Sansation_Regular-webfont.woff') format('woff'),
+        url('../asset/Sansation/Sansation_Regular-webfont.ttf') format('truetype'),
+        url('../asset/Sansation/Sansation_Regular-webfont.svg#SansationRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SansationItalic';
+    src: url('../asset/Sansation/Sansation_Italic-webfont.eot');
+    src: url('../asset/Sansation/Sansation_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../asset/Sansation/Sansation_Italic-webfont.woff') format('woff'),
+        url('../asset/Sansation/Sansation_Italic-webfont.ttf') format('truetype'),
+        url('../asset/Sansation/Sansation_Italic-webfont.svg#SansationItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+a{
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+ul, ol{
+    list-style: none;
+}
+
+/*
+p{
+    text-align: justify;
+}
+*/
+
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'MuseoSlab500Regular';
+    font-weight: normal;
+}
+
+.clear{
+    clear: both;
+}
+
+
+
+
+/* food fight opponents */
+.opponent{
+    width: 288px;
+    height: 360px;
+    position: relative;
+    color: #fff;
+    margin-top: 75px;
+}
+
+.opponent > div,
+.opponent img{
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.opponent .header,
+.opponent .details{
+    position: absolute;
+    font-size: 34px;
+    font-family: 'MuseoSlab500Regular';
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.opponent .header{
+    width: 115px;    
+    height: 95px;
+    padding-top: 20px;
+}
+
+.opponent .details{
+    width: 83px;    
+    height: 58px;
+    top: 100px;
+    line-height: 15px;
+    padding-top: 25px;
+}
+
+.opponent .header small{
+    display: block;
+}
+
+.opponent .header small{
+    font-size: 24px;
+}
+
+.opponent .details small{
+    font-size: 10px;
+}
+
+.opponent .image{
+    width: 278px;
+    height: 278px;
+    padding: 5px;
+    z-index: 2;
+    position: relative;
+}
+
+.opponent .image img{
+    border: 2px solid #fff;
+}
+
+.opponent p{
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.opponent.good{
+    float: left;
+}
+
+.opponent.good > div{
+    background: #2c8f0e;
+}
+
+.opponent.good .header{
+    -moz-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    
+    left: -30px;
+    top: -30px;
+}
+
+
+.opponent.good .details{   
+    right: -70px;
+}
+
+
+.opponent.bad{
+    float: right;
+}
+
+.opponent.bad > div{
+    background: #dc2727;
+}
+
+.opponent.bad .header{
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    
+    right: -30px;
+    top: -30px;
+}
+
+.opponent.bad .details{   
+    right: 276px;
+}

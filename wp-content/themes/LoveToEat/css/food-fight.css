@@ -1,0 +1,313 @@
+html,
+body{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    background: #000 url('../img/ring_bg.jpg') no-repeat center center fixed; 
+    /*
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    */
+    font-family: 'SansationRegular';
+    font-size: 14px;
+    line-height: 23px;
+    color: #fff;
+    position: relative;
+}
+
+body.single{
+    min-height: 620px;
+    min-width: 1340px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'MuseoSlab500Regular';
+    font-weight: normal;
+}
+
+
+
+a.nav{
+    display: block;
+    width: 100px;
+    height: 115px;
+    position: absolute;
+    top: 50%;
+    margin-top: -57px;
+    text-indent: -999em;
+}
+
+a.nav.left{
+    background: url('../img/btn-ff-left.png') no-repeat;
+    left: 0px;
+}
+
+a.nav.left:hover{
+    background: url('../img/btn-ff-left-hl.png') no-repeat;
+}
+
+a.nav.right{
+    background: url('../img/btn-ff-right.png') no-repeat;
+    right: 0px;
+}
+
+a.nav.right:hover{
+    background: url('../img/btn-ff-right-hl.png') no-repeat;
+}
+
+
+#archive {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    overflow: hidden;
+}
+
+#archive .fight{
+    float: left;
+    width: 311px;
+    height: 153px;
+    border: 1px solid #3a3a3a;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    margin-right: 11px;
+    margin-bottom: 13px;
+    position: relative;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+#archive .fight header,
+#details header{
+    margin-top: 18px;
+    margin-bottom: 16px;
+    height: 44px;
+    background: url('../img/bg-slash.png') center center no-repeat;
+    overflow: hidden;
+}
+
+
+#archive .fight header h2,
+#details header h2{
+    width: 150px;
+    font-size: 21px;
+}
+
+#details header h2{
+    width: 530px;
+}
+
+#details header .left{
+    margin-right: 10px;
+}
+
+#details header .right{
+    margin-left: 10px;
+}
+
+
+#archive .fight header .left,
+#details header .left{
+    float: left;
+    text-align: right;
+}
+
+
+#archive .fight header .right,
+#details header .right{
+    float: right;
+    text-align: left;
+    margin-top: 23px;
+}
+
+
+#archive .fight .img{
+    position: absolute;
+    bottom: 0px;
+}
+
+@media (min-width: 1515px){
+
+    #archive {
+        width: 1285px;
+        margin-left: -642px;
+        height: 324px;
+        margin-top: -162px;
+    }
+
+    #archive a:nth-child(4) .fight,
+    #archive a:nth-child(8) .fight{
+        margin-right: 0px;
+    }
+}
+
+
+@media (max-width: 1515px){
+
+    body{
+        min-width: 1190px;
+    }
+
+    #archive {
+        width: 961px;
+        margin-left: -480px;
+        height: 492px;
+        margin-top: -246px;
+    }
+
+    
+    #archive a:nth-child(3) .fight,
+    #archive a:nth-child(6) .fight{
+        margin-right: 0px;
+    }
+}
+
+
+#details{
+    width: 1080px;
+    height: 650px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -325px;
+    margin-left: -540px;
+}
+
+
+
+
+#details header,
+#details .timer,
+#details .tags,
+#details .info{
+    position: absolute;
+}
+
+
+
+#details .timer{
+    background: url('../img/ring-counter.jpg') no-repeat;
+    width: 193px;
+    height: 153px;
+    overflow: hidden;
+    left: 50%;
+    margin-left: -94px;
+    margin-top: 140px;
+}
+
+#details .timer > div{
+    float: left;
+    margin-top: 7px;
+}
+
+#details .timer .left{
+    margin-left: 3px;
+}
+
+#details .timer .right{
+    margin-left: 15px;
+}
+
+
+#details .tags{
+    width: 164px;
+    left: 50%;
+    margin-left: -82px;
+    top: 360px;
+    text-align: justify;
+}
+
+#details .tags a:hover{
+    text-decoration: underline;
+}
+
+
+#details .info{
+    left: 50%;
+    margin-left: -18px;
+    top: 520px;
+}
+
+#details .info .wrapper{
+    position: relative;
+    width: 36px;
+    height: 36px;
+    background: url('../img/icon-info.png') no-repeat;
+}
+
+#details .info .content{
+    background: #000;
+    padding: 15px;
+    width: 295px;
+    margin-left: -147px;
+    position: absolute;
+    display: none;
+}
+
+#details .info:hover .content{
+    display: block;
+}
+
+#details .info .content p{
+    margin-bottom: 22px;
+    line-height: 16px;
+    text-align: justify;
+}
+
+#details header h2{
+    position: relative;
+    height: 23px;
+    overflow: hidden;
+}
+
+#details header span{
+    position: absolute;
+    display: block;
+}
+
+
+
+.opponent .image div{
+    background: #000;
+    padding-top: 130px;
+    width: 274px;
+    height: 144px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 220px;
+    font-family: 'MuseoSlab500Regular';
+    border: 2px solid #fff;
+    position: absolute;
+}
+
+
+.opponent p{
+    margin-top: 50px;
+    font-size: 28px;
+}
+
+.opponent ul{
+    list-style: none;
+    width: 193px;
+    margin: 25px auto 0;
+}
+
+.opponent ul li{
+    border-bottom: 1px dotted #494749;
+    padding-top: 2px;
+    height: 24px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.opponent ul li span{
+    float: right;
+    display: block;
+}

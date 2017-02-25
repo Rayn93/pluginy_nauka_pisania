@@ -1,0 +1,6 @@
+﻿Fonty użyte na stronie, które powinieneś pobrać i umieścić w tym katalogu:
+
+Museo Slab 500: http://www.fontsquirrel.com/fonts/Museo-Slab
+Sansation: http://www.fontsquirrel.com/fonts/Sansation
+
+Intrukcje znajdziesz w kursie.
