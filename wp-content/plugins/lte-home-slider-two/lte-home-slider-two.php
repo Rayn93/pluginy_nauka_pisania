@@ -12,6 +12,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 require_once 'libs/LTEHomesSlider_Model.php';
+require_once 'libs/Request.php';
 
 
 class LTE_home_slider{
@@ -30,6 +31,7 @@ class LTE_home_slider{
 
         //Rejestracja admin menu dla wtyczki
         add_action('admin_menu', array($this, 'create_admin_menu') );
+
     }
 
     function onActivate(){
@@ -63,13 +65,39 @@ class LTE_home_slider{
 
     function home_slider_menu_page(){
 
+        $request = Request::instance();
+        $view = $request->getQuerySingleParam('view', 'index');
+
+        switch ($view){
+            case 'index':
+                $this->render('index');
+                break;
+
+            case 'form':
+                $this->render('form');
+                break;
+            default:
+                $this->render('404');
+
+        }
+
+
+
     }
 
     function create_admin_menu(){
-
         add_menu_page( 'LTE home slider', 'Home slider', $this->capability, static::$plugin_id, array($this, 'home_slider_menu_page' ));
-
     }
+
+    private function render($view){
+
+        $theme_path = plugin_dir_path(__FILE__).'themes/';
+
+        $view = $theme_path.$view.'.php';
+
+        require_once $theme_path.'layout.php';
+    }
+
 
 }
 
