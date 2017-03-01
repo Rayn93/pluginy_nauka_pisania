@@ -32,6 +32,26 @@ class LTE_home_slider{
         //Rejestracja admin menu dla wtyczki
         add_action('admin_menu', array($this, 'create_admin_menu') );
 
+        //Dodawanie stylów css i skryotów js dla admina
+        add_action('admin_enqueue_scripts', array($this, 'add_admin_page_scripts') );
+
+
+    }
+
+    function add_admin_page_scripts(){
+
+        wp_register_script('lte-script', plugins_url('/js/scripts.js', __FILE__), array('jquery', 'media-upload', 'thickbox'));
+
+        if(get_current_screen()->id == 'toplevel_page_'.static::$plugin_id){
+
+            wp_enqueue_script('jquery');
+            wp_enqueue_script('thickbox');
+            wp_enqueue_style('thickbox');
+            wp_enqueue_script('media-upload');
+            wp_enqueue_script('lte-script');
+
+        }
+
     }
 
     function onActivate(){
