@@ -10,9 +10,14 @@
             </th>
             <td>
                 <a class="button-secondary" id="select-slide-btn">Wybierz slajd z biblioteki mediów</a>
-                <input type="hidden" name="entry[slide_url]" id="lte-hs-slide-url" value="" />
+                <input type="hidden" name="entry[slide_url]" id="lte-hs-slide-url" value="<?php $slide->get_field('slide_url'); ?>" />
 
-                <p class="description">To pole jest wymagane</p>
+                <?php if($slide->hasError('slide_url')): ?>
+                    <p class="description error"><?php echo $slide->getError('slide_url'); ?></p>
+                <?php else: ?>
+                    <p class="description">To pole jest wymagane</p>
+                <?php endif ?>
+
                 <p id="slide-preview"></p>
 
 
@@ -24,9 +29,13 @@
                 <label for="lte-hs-title">Tytuł:</label>
             </th>
             <td>
-                <input type="text" name="entry[title]" id="lte-hs-title" value="" />
+                <input type="text" name="entry[title]" id="lte-hs-title" value="<?php $slide->get_field('title'); ?>" />
 
-                <p class="description">To pole jest wymagane</p>
+                <?php if($slide->hasError('title')): ?>
+                    <p class="description error"><?php echo $slide->getError('title'); ?></p>
+                <?php else: ?>
+                    <p class="description">To pole jest wymagane</p>
+                <?php endif ?>
 
             </td>
         </tr>
@@ -36,9 +45,13 @@
                 <label for="lte-hs-caption">Podpis:</label>
             </th>
             <td>
-                <input type="text" name="entry[caption]" id="lte-hs-caption" value="" />
+                <input type="text" name="entry[caption]" id="lte-hs-caption" value="<?php $slide->get_field('caption'); ?>" />
 
-                <p class="description">To pole jest opcjonalne</p>
+                <?php if($slide->hasError('caption')): ?>
+                    <p class="description error"><?php echo $slide->getError('caption'); ?></p>
+                <?php else: ?>
+                    <p class="description">To pole jest opcjonalne</p>
+                <?php endif ?>
 
             </td>
         </tr>
@@ -48,9 +61,13 @@
                 <label for="lte-hs-read-more-url">Link "Czytaj więcej":</label>
             </th>
             <td>
-                <input type="text" name="entry[read_more_url]" id="lte-hs-read-more-url" value="" />
+                <input type="text" name="entry[read_more_url]" id="lte-hs-read-more-url" value="<?php $slide->get_field('read_more_url'); ?>" />
 
-                <p class="description">To pole jest opcjonalne</p>
+                <?php if($slide->hasError('read_more_url')): ?>
+                    <p class="description error"><?php echo $slide->getError('read_more_url'); ?></p>
+                <?php else: ?>
+                    <p class="description">To pole jest opcjonalne</p>
+                <?php endif ?>
 
             </td>
         </tr>
@@ -60,10 +77,15 @@
                 <label for="lte-hs-position">Pozycja:</label>
             </th>
             <td>
-                <input type="text" name="entry[position]" id="lte-hs-position" value="" />
+                <input type="text" name="entry[position]" id="lte-hs-position" value="<?php $slide->get_field('position'); ?>" />
                 <a class="button-secondary" id="get-last-pos">Pobierz ostatnią wolną pozycję</a>
 
-                <p id="post-info" class="description">To pole jest wymagane</p>
+                <?php if($slide->hasError('position')): ?>
+                    <p id="post-info" class="description error"><?php echo $slide->getError('position'); ?></p>
+                <?php else: ?>
+                    <p id="post-info" class="description">To pole jest wymagane</p>
+                <?php endif ?>
+
 
             </td>
         </tr>
@@ -73,7 +95,7 @@
                 <label for="lte-hs-published">Opublikowany:</label>
             </th>
             <td>
-                <input type="checkbox" name="entry[published]" id="lte-hs-published" value="yes" />
+                <input type="checkbox" name="entry[published]" id="lte-hs-published" value="yes" <?php echo($slide->is_published() ? 'checked' : '');  ?> />
             </td>
         </tr>
 

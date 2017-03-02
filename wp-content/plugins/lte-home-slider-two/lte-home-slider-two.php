@@ -12,6 +12,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 require_once 'libs/LTEHomesSlider_Model.php';
+require_once 'libs/LTE_SlideEntity.php';
 require_once 'libs/Request.php';
 
 
@@ -40,8 +41,10 @@ class LTE_home_slider{
         add_action('wp_ajax_getLastFreePosition', array($this, 'show_last_position'));
 
 
+
         //DEBUGING
-        //var_dump($this->model->get_last_free_position());
+//        $slide_entry = new LTE_SlideEntity();
+//        var_dump( extract((array) $slide_entry));
 
     }
 
@@ -101,7 +104,12 @@ class LTE_home_slider{
                 break;
 
             case 'form':
-                $this->render('form');
+
+                $slide_entry = new LTE_SlideEntity();
+
+                $this->render('form', array(
+                    'slide' => $slide_entry
+                ));
                 break;
             default:
                 $this->render('404');
@@ -146,7 +154,9 @@ class LTE_home_slider{
         add_menu_page( 'LTE home slider', 'Home slider', $this->capability, static::$plugin_id, array($this, 'home_slider_menu_page' ));
     }
 
-    private function render($view){
+    private function render($view, array $args = array()){
+
+        extract($args);
 
         $theme_path = plugin_dir_path(__FILE__).'themes/';
 
