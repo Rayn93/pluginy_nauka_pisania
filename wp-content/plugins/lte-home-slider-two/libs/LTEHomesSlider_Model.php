@@ -36,4 +36,29 @@ class LTE_Homes_Slider_Model{
 
     }
 
+    function is_empty_position($position){
+
+        $position = (int)$position;
+        $table_name = $this->getTableName();
+
+        $sql = "SELECT COUNT(*) FROM {$table_name} WHERE position = %d ";
+
+        $prep = $this->wpbd->prepare($sql, $position);
+        $count = (int)$this->wpbd->get_var($prep);
+
+        return ($count < 1);
+    }
+
+    function get_last_free_position(){
+        $table_name = $this->getTableName();
+
+        $sql = "SELECT MAX(position) FROM {$table_name}";
+
+        $result = (int)$this->wpbd->get_var($sql);
+
+        return ($result+1);
+
+
+    }
+
 }

@@ -63,7 +63,7 @@
                 <input type="text" name="entry[position]" id="lte-hs-position" value="" />
                 <a class="button-secondary" id="get-last-pos">Pobierz ostatnią wolną pozycję</a>
 
-                <p class="description">To pole jest wymagane</p>
+                <p id="post-info" class="description">To pole jest wymagane</p>
 
             </td>
         </tr>

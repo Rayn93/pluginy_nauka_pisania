@@ -35,6 +35,13 @@ class LTE_home_slider{
         //Dodawanie stylów css i skryotów js dla admina
         add_action('admin_enqueue_scripts', array($this, 'add_admin_page_scripts') );
 
+        //Podpięcie AJAX
+        add_action('wp_ajax_checkValidPosition', array($this, 'check_valid_position'));
+        add_action('wp_ajax_getLastFreePosition', array($this, 'show_last_position'));
+
+
+        //DEBUGING
+        //var_dump($this->model->get_last_free_position());
 
     }
 
@@ -100,10 +107,40 @@ class LTE_home_slider{
                 $this->render('404');
 
         }
+    }
 
 
+    function check_valid_position(){
+
+        $position = isset($_POST['position']) ? (int)$_POST['position'] : 0;
+
+        $massage = '';
+
+        if($position < 1){
+            $massage = 'Podana wartość jest niepoprawna. Podana liczba musi być liczbą większą od 0';
+        }
+        else{
+
+            if(!$this->model->is_empty_position($position)){
+                $massage = 'Podana przez Ciebie pozycja jest już zajeta';
+            }
+            else{
+                $massage = 'Ta pozycja jest wolna';
+            }
+        }
+
+        echo $massage;
+        die;
+    }
+
+    function show_last_position(){
+
+        echo $this->model->get_last_free_position();
+        die;
 
     }
+
+
 
     function create_admin_menu(){
         add_menu_page( 'LTE home slider', 'Home slider', $this->capability, static::$plugin_id, array($this, 'home_slider_menu_page' ));
