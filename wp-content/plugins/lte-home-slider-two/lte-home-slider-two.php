@@ -1,6 +1,6 @@
 <?php
-
-//session_start();
+ob_start();
+session_start();
 
 /*
 Plugin Name: Love To Eat Home Slider 2
@@ -25,6 +25,8 @@ class LTE_home_slider{
     private $plugin_version = '1.0.0';
     private $model;
     private $capability = 'manage_options';
+
+    private $action_token = 'lte-hs-action';
 
     function __construct(){
 
@@ -118,6 +120,7 @@ class LTE_home_slider{
                     if(!$slide_entry->exist()){
                         $this->set_flash_msg('Podany slajd nie istnieje', 'error');
                         //przekierowanie na index
+                        $this->redirect($this->get_admin_url());
                     }
 
                 }
@@ -127,19 +130,38 @@ class LTE_home_slider{
 
 
                 if($action == 'save' && $request->isMethod('POST') && isset($_POST['entry'])){
-                    $slide_entry->set_fields($_POST['entry']);
 
-                    if($slide_entry->validate()){
-                        if($this->model->save_entry($slide_entry)){
-                            $this->set_flash_msg('Poprawnie dodano nowy slajd');
+                    if( check_admin_referer($this->action_token)){
+                        $slide_entry->set_fields($_POST['entry']);
+
+                        if($slide_entry->validate()){
+
+                            $entry_id = $this->model->save_entry($slide_entry);
+
+                            if($entry_id !== FALSE){
+                                if($slide_entry->has_id()){
+                                    $this->set_flash_msg('Poprawnie zmodyfikowano slajd');
+                                }
+                                else{
+                                    $this->set_flash_msg('Poprawnie dodano nowy slajd');
+                                    $this->redirect($this->get_admin_url(array('view' => 'form', 'slideid' => $entry_id)));
+                                }
+
+                            }
+                            else{
+                                $this->set_flash_msg('Wystąpił błąd z zapisem do bazy danych. Skontaktuj się z developerem wtyczki', 'error');
+                            }
                         }
                         else{
-                            $this->set_flash_msg('Wystąpił błąd z zapisem do bazy danych. Skontaktuj się z developerem wtyczki', 'error');
+                            $this->set_flash_msg('Niepoprawnie wypełniłeś formularz. Popraw błędy w formularzu i wyślij ponownie', 'error');
                         }
                     }
                     else{
-                        $this->set_flash_msg('Niepoprawnie wypełniłeś formularz. Popraw błędy w formularzu i wyślij ponownie', 'error');
+
+                        $this->set_flash_msg('Błędny token formularza', 'error');
+
                     }
+
 
                 }
 
@@ -208,7 +230,7 @@ class LTE_home_slider{
     }
 
 
-    //Wiadomości flesh zwracane przy wysyłaniu formularza
+    //Wiadomości i statusy flesh zwracane przy wysyłaniu formularza
     public function set_flash_msg($massage, $status = 'updated'){
 
         $_SESSION[__CLASS__]['massage'] = $massage;
@@ -243,7 +265,14 @@ class LTE_home_slider{
     }
 
 
+    public function redirect($location){
+        wp_safe_redirect($location);
+        die;
+    }
+
+
 }
 
 $LTE_Home_Slider = new LTE_home_slider();
 
+ob_flush();

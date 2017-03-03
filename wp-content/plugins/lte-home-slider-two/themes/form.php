@@ -13,6 +13,8 @@ if($slide->has_id()){
 
 <form action="<?php echo $this->get_admin_url($action_params); ?>" method="post" id="lte-hs-slide-form">
 
+    <?php wp_nonce_field($this->action_token); ?>
+
     <table class="form-table">
 
         <tbody>
