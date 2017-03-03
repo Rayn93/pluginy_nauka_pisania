@@ -15,6 +15,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 require_once 'libs/LTEHomesSlider_Model.php';
 require_once 'libs/LTE_SlideEntity.php';
+require_once 'libs/Pagination.php';
 require_once 'libs/Request.php';
 
 
@@ -27,6 +28,7 @@ class LTE_home_slider{
     private $capability = 'manage_options';
 
     private $action_token = 'lte-hs-action';
+    private $pagination_limit = 5;
 
     function __construct(){
 
@@ -109,7 +111,16 @@ class LTE_home_slider{
 
         switch ($view){
             case 'index':
-                $this->render('index');
+
+                $curr_page = (int)$request->getQuerySingleParam('paged', 1);
+                $order_by = $request->getQuerySingleParam('orderby', 'id');
+                $order_dir = $request->getQuerySingleParam('orderdir', 'asc');
+
+                $pagination = $this->model->get_pagination($curr_page, $this->pagination_limit, $order_by, $order_dir );
+
+                $this->render('index', array(
+                    'Pagination' => $pagination
+                ));
                 break;
 
             case 'form':

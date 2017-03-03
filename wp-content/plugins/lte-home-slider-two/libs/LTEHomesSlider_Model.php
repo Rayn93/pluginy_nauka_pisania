@@ -112,9 +112,44 @@ class LTE_Homes_Slider_Model{
         $result = $this->wpbd->get_row($prep);
 
         return $result;
+    }
 
+    function get_pagination($curr_page, $limit = 10, $order_by = 'id', $order_dir = 'asc'){
 
+        $table_name = $this->getTableName();
 
+        $curr_page = (int)$curr_page;
+        if($curr_page < 1){
+            $curr_page = 1;
+        }
+
+        $order_by_opts = static::get_order_by_opts();
+        $order_by = (in_array($order_by, $order_by_opts)) ? $order_by : 'id';
+
+        $order_dir = (in_array($order_dir, array('asc', 'desc'))) ? $order_dir : 'asc';
+
+        $offset = ($curr_page-1)*$limit;
+
+        $count_sql = "SELECT COUNT(*) FROM {$table_name} ";
+
+        $total_slides = $this->wpbd->get_var($count_sql);
+        $last_page = ceil($total_slides/$limit);
+
+        $sql = "SELECT * FROM {$table_name} ORDER BY {$order_by} {$order_dir} LIMIT {$offset} , {$limit}";
+
+        $slide_list = $this->wpbd->get_results($sql);
+
+        $Pagination = new Pagination($slide_list, $order_by, $order_dir, $limit, $total_slides, $curr_page, $last_page);
+
+        return $Pagination;
+    }
+
+    static function get_order_by_opts(){
+        return array(
+            'ID' => 'id',
+            'Pozycja' => 'position',
+            'Widoczność' => 'published'
+        );
     }
 
 }
