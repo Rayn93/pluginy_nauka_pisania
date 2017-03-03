@@ -1,5 +1,7 @@
 <?php
 
+
+//Klasa odpowiadająca za instancję formularza ze slajdem.
 class LTE_SlideEntity{
 
     private $id = NULL;
@@ -11,7 +13,35 @@ class LTE_SlideEntity{
     private  $published = 'yes';
 
     private  $errors = array();
+    private  $exists = FALSE;
 
+    /**
+     * LTE_SlideEntity constructor.
+     * @param null $id
+     */
+    public function __construct($id = NULL)
+    {
+        $this->id = $id;
+        $this->load();
+    }
+
+    //Pobiera dane o slajdzie z bazy jeżeli jest ustawione id
+    public function load(){
+
+        if(isset($this->id)){
+            $Model = new LTE_Homes_Slider_Model();
+            $row = $Model->fetch_row($this->id);
+        }
+
+        if(isset($row)){
+            $this->set_fields($row);
+            $this->exists = TRUE;
+        }
+    }
+
+    public function exist(){
+        return $this->exists;
+    }
 
 
     function get_field($field){
@@ -22,6 +52,7 @@ class LTE_SlideEntity{
         return NULL;
     }
 
+    //Funkcja odpowiadająca za ustawianie zmiennych w polach formularza (przy braku 100% walidacji)
     function set_fields($fields){
         foreach ($fields as $key => $val){
             $this->{$key} = $val;
@@ -52,7 +83,12 @@ class LTE_SlideEntity{
         return ($this->published == 'yes');
     }
 
+    function has_id(){
+        return (isset($this->id));
+    }
 
+
+    //Funkcja walidująca dane formularza
     function validate(){
 
         /*

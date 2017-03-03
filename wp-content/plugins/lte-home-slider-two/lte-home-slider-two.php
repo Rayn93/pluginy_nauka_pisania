@@ -1,5 +1,7 @@
 <?php
 
+//session_start();
+
 /*
 Plugin Name: Love To Eat Home Slider 2
 Plugin URI:  http://robertsaternus.pl
@@ -16,6 +18,7 @@ require_once 'libs/LTE_SlideEntity.php';
 require_once 'libs/Request.php';
 
 
+//Główna klasa wtyczki - kontroler wtyczki
 class LTE_home_slider{
 
     private static $plugin_id = 'saternus-home-slider';
@@ -44,10 +47,11 @@ class LTE_home_slider{
 
         //DEBUGING
 //        $slide_entry = new LTE_SlideEntity();
-//        var_dump( extract((array) $slide_entry));
+//        var_dump($this->model->fetch_row(3));
 
     }
 
+    //Dodawanie styli css i skryptów js do widoku pluginu
     function add_admin_page_scripts(){
 
         wp_register_script('lte-script', plugins_url('/js/scripts.js', __FILE__), array('jquery', 'media-upload', 'thickbox'));
@@ -61,9 +65,9 @@ class LTE_home_slider{
             wp_enqueue_script('lte-script');
 
         }
-
     }
 
+    //Funkcja odpalana przy aktywacji pluginu (tworzy tabelę w bazie, sprawdza versję pluginu)
     function onActivate(){
 
         $ver_opt = static::$plugin_id.'-version';
@@ -93,10 +97,13 @@ class LTE_home_slider{
     }
 
 
+    //Mechanizm routingu + obsługa poszczególnych widoków
     function home_slider_menu_page(){
 
         $request = Request::instance();
         $view = $request->getQuerySingleParam('view', 'index');
+        $action = $request->getQuerySingleParam('action');
+        $slideid = (int)$request->getQuerySingleParam('slideid');
 
         switch ($view){
             case 'index':
@@ -105,11 +112,41 @@ class LTE_home_slider{
 
             case 'form':
 
-                $slide_entry = new LTE_SlideEntity();
+                if($slideid > 0){
+                    $slide_entry = new LTE_SlideEntity($slideid);
+
+                    if(!$slide_entry->exist()){
+                        $this->set_flash_msg('Podany slajd nie istnieje', 'error');
+                        //przekierowanie na index
+                    }
+
+                }
+                else{
+                    $slide_entry = new LTE_SlideEntity();
+                }
+
+
+                if($action == 'save' && $request->isMethod('POST') && isset($_POST['entry'])){
+                    $slide_entry->set_fields($_POST['entry']);
+
+                    if($slide_entry->validate()){
+                        if($this->model->save_entry($slide_entry)){
+                            $this->set_flash_msg('Poprawnie dodano nowy slajd');
+                        }
+                        else{
+                            $this->set_flash_msg('Wystąpił błąd z zapisem do bazy danych. Skontaktuj się z developerem wtyczki', 'error');
+                        }
+                    }
+                    else{
+                        $this->set_flash_msg('Niepoprawnie wypełniłeś formularz. Popraw błędy w formularzu i wyślij ponownie', 'error');
+                    }
+
+                }
 
                 $this->render('form', array(
                     'slide' => $slide_entry
                 ));
+
                 break;
             default:
                 $this->render('404');
@@ -117,11 +154,10 @@ class LTE_home_slider{
         }
     }
 
-
+    //Sprawdzenie poprawności pola 'position' w formularzu
     function check_valid_position(){
 
         $position = isset($_POST['position']) ? (int)$_POST['position'] : 0;
-
         $massage = '';
 
         if($position < 1){
@@ -141,28 +177,69 @@ class LTE_home_slider{
         die;
     }
 
+    //Zwraca ostatnią wolną pozycję slajdu dla formularza
     function show_last_position(){
 
         echo $this->model->get_last_free_position();
         die;
-
     }
 
-
-
+    //Tworzy menu dla wtyczki w kokpicie
     function create_admin_menu(){
         add_menu_page( 'LTE home slider', 'Home slider', $this->capability, static::$plugin_id, array($this, 'home_slider_menu_page' ));
     }
 
+    //Mechanizm routingu - renderuje odpowiedni widok
     private function render($view, array $args = array()){
 
         extract($args);
-
         $theme_path = plugin_dir_path(__FILE__).'themes/';
-
         $view = $theme_path.$view.'.php';
-
         require_once $theme_path.'layout.php';
+    }
+
+    //Zwraca url wtyczki wraz z odpowiednimi parametrami (view i action)
+    public function get_admin_url(array $params = array()){
+
+        $admin_url = admin_url().'admin.php?page='.static::$plugin_id;
+        $admin_url = add_query_arg($params, $admin_url);
+
+        return $admin_url;
+    }
+
+
+    //Wiadomości flesh zwracane przy wysyłaniu formularza
+    public function set_flash_msg($massage, $status = 'updated'){
+
+        $_SESSION[__CLASS__]['massage'] = $massage;
+        $_SESSION[__CLASS__]['status'] = $status;
+
+    }
+
+    public function get_flash_msg(){
+
+        if(isset($_SESSION[__CLASS__]['massage'])){
+            $msg = $_SESSION[__CLASS__]['massage'];
+            unset($_SESSION[__CLASS__]);
+            return $msg;
+        }
+        else{
+            return NULL;
+        }
+    }
+
+    public function get_flash_status(){
+
+        if(isset($_SESSION[__CLASS__]['status'])){
+            return $_SESSION[__CLASS__]['status'];
+        }
+        else{
+            return NULL;
+        }
+    }
+
+    public function has_flash_msg(){
+        return (isset($_SESSION[__CLASS__]['massage']));
     }
 
 
