@@ -101,7 +101,7 @@ class LTE_home_slider{
     }
 
 
-    //Mechanizm routingu + obsługa poszczególnych widoków
+    //Mechanizm routingu + obsługa poszczególnych widoków Główny kontroler pluginu
     function home_slider_menu_page(){
 
         $request = Request::instance();
@@ -116,7 +116,67 @@ class LTE_home_slider{
                 $order_by = $request->getQuerySingleParam('orderby', 'id');
                 $order_dir = $request->getQuerySingleParam('orderdir', 'asc');
 
+
+
                 $pagination = $this->model->get_pagination($curr_page, $this->pagination_limit, $order_by, $order_dir );
+                
+                if($action == 'delete' ){
+
+                    $token_name = $this->action_token.'_'.$slideid;
+                    $wp_nonce = $request->getQuerySingleParam('_wpnonce', NULL);
+
+                    if(wp_verify_nonce($wp_nonce, $token_name)){
+                        if($this->model->delete_slajd($slideid)){
+                            $this->set_flash_msg('Poprawnie usunięto wpis o id = '.$slideid);
+                            $this->redirect($this->get_admin_url());
+                        }
+                        else{
+                            $this->set_flash_msg('Błąd podczas usuwania slajdu z bazy. Spróbuj później');
+                            $this->redirect($this->get_admin_url());
+                        }
+                    }
+                    else{
+                        $this->set_flash_msg('Niepoprawny token!');
+                        $this->redirect($this->get_admin_url());
+                    }
+                }
+
+                elseif($action == 'bulk'){
+
+                    $token_name = $this->action_token.'bulk';
+
+                    if( $request->isMethod('POST') && check_admin_referer($token_name)){
+
+                        $bulk_action = (isset($_POST['bulkaction']) ? $_POST['bulkaction'] : NULL);
+                        $bulk_checked = (isset($_POST['bulkcheck']) ? $_POST['bulkcheck'] : array());
+
+                        if(count($bulk_checked) < 1){
+                            $this->set_flash_msg('Brak slajdów do zmiany.', 'error');
+                        }
+                        elseif($bulk_action == 'delete'){
+
+                            if($this->model->bulk_delete($bulk_checked) != FALSE){
+                                $this->set_flash_msg('Poprawnie usunięto zaznaczone wpisy');
+                            }
+                            else{
+                                $this->set_flash_msg('Nie udało się usunąć wpisów', 'error');
+                            }
+
+                        }
+                        elseif ($bulk_action == 'public' || $bulk_action == 'private'){
+
+                            if($this->model->bulk_change_visibility($bulk_checked, $bulk_action) != FALSE){
+                                $this->set_flash_msg('Poprawnie zmieniono status slajdów na'.$bulk_action.'.');
+                            }
+                            else{
+                                $this->set_flash_msg('Nie zmieniono statusu slajdów', 'error');
+                            }
+
+                        }
+                    }
+                    $this->redirect($this->get_admin_url());
+
+                }
 
                 $this->render('index', array(
                     'Pagination' => $pagination

@@ -148,8 +148,49 @@ class LTE_Homes_Slider_Model{
         return array(
             'ID' => 'id',
             'Pozycja' => 'position',
-            'Widoczność' => 'published'
+            'Widoczność' => 'published',
+            'Tytuł' => 'title',
         );
+    }
+
+    public function delete_slajd($slide_id){
+        $slide_id = (int)$slide_id;
+        $table_name = $this->getTableName();
+
+        return ($this->wpbd->delete( $table_name, array( 'id' => $slide_id ) ));
+    }
+
+    public function bulk_delete(array $ids){
+        $ids = array_map('intval', $ids);
+        $table_name = $this->getTableName();
+
+        $ids_str = implode(',', $ids);
+
+        $sql = "DELETE FROM {$table_name} WHERE id IN ({$ids_str})";
+
+        return ($this->wpbd->query($sql));
+
+    }
+
+    public function bulk_change_visibility(array $ids, $status){
+        $ids = array_map('intval', $ids);
+        $table_name = $this->getTableName();
+        $ids_str = implode(',', $ids);
+        $changeTo = '';
+
+        switch ($status){
+            case 'public':
+                $changeTo = 'yes';
+                break;
+            case 'private':
+                $changeTo = 'no';
+                break;
+        };
+
+        $sql = "UPDATE {$table_name} SET published = '{$changeTo}' WHERE id IN ({$ids_str})";
+
+        return ($this->wpbd->query($sql));
+
     }
 
 }

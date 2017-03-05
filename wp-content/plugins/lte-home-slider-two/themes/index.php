@@ -1,24 +1,38 @@
 
-<form id="lte-hs-form1" method="get" action="">
+<form id="lte-hs-form1" method="get" action="<?php echo $this->get_admin_url(); ?>">
+
+    <input type="hidden" name="page" value="<?php echo static::$plugin_id; ?>" >
+    <input type="hidden" name="paged" value="<?php echo $Pagination->getCurrPage(); ?>" >
 
     Sortuj według:
-    <select name="sort_by">
-        <option value="id">Identyfikatora</option>
-        <option value="position">Pozycji</option>
-        <option value="published">Widoczność</option>
+    <select name="orderby">
+
+        <?php foreach ( LTE_Homes_Slider_Model::get_order_by_opts() as $key => $value): ?>
+            <option <?php echo ($value == $Pagination->getOrderBy()) ? 'selected="selected"' : '' ?> value="<?php echo $value ?>"><?php echo $key ?> </option>
+        <?php endforeach; ?>
+
     </select>
 
 
-    <select name="order_dir">
-        <option value="asc">Rosnąco</option>
-        <option value="desc">Malejąco</option>
+    <select name="orderdir">
+        <?php if($Pagination->getOrderDir() == 'asc'): ?>
+            <option selected="selected" value="asc">Rosnąco</option>
+            <option value="desc">Malejąco</option>
+        <?php else: ?>
+            <option value="asc">Rosnąco</option>
+            <option selected="selected" value="desc">Malejąco</option>
+        <?php endif; ?>
+
+
     </select>
 
     <input type="submit" class="button-secondary" value="Sortuj">
 
 </form>
 
-<form id="lte-hs-form2" method="post" action="">
+<form id="lte-hs-form2" method="post" action="<?php echo $this->get_admin_url(array('view' => 'index', 'action' => 'bulk')); ?>" onsubmit="return confirm('Czy na pewno chcesz wprowadzić zmiany masowe?')">
+
+    <?php wp_nonce_field($this->action_token.'bulk'); ?>
 
     <div class="tablenav">
         <div class="action alignleft">
@@ -113,18 +127,25 @@
 
                 <tr <?php echo ($i%2 == 0) ? 'class="alternate"' : '' ?> >
                     <th class="check-column">
-                        <input type="checkbox" value="1" name="bulkcheck[]">
+                        <input type="checkbox" value="<?php echo $item->id; ?>" name="bulkcheck[]">
                     </th>
                     <td><?php echo $item->id; ?></td>
                     <td>
                         Podgląd slajdu <br />
                         <img src="<?php echo $item->slide_url; ?>" alt="obrazek slajdu" />
+
+                        <?php
+                            $token = $this->action_token.'_'.$item->id;
+                            $del_url = $this->get_admin_url(array('action' => 'delete', 'slideid' => $item->id));
+                        ?>
+
+
                         <div class="row-actions">
                         <span class="edit">
-                            <a class="edit" href="">Edytuj</a>
+                            <a class="edit" href="<?php echo $this->get_admin_url(array('view' => 'form', 'slideid' => $item->id)); ?>">Edytuj</a>
                         </span> |
                             <span class="trash">
-                            <a class="delete" href="" onclick="return confirm('Czy na pewno chcesz usunąć ten wpis?')">Usuń</a>
+                            <a class="delete" href="<?php echo wp_nonce_url($del_url, $token); ?>" onclick="return confirm('Czy na pewno chcesz usunąć ten wpis?')">Usuń</a>
                         </span>
                         </div>
                     </td>
