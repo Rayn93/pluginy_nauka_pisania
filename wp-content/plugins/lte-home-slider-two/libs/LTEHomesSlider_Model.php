@@ -4,7 +4,7 @@
 //Klasa odpowiadająca za komunikację z bazą danych
 class LTE_Homes_Slider_Model{
 
-    private $table = 'lte_home_slider';
+    private $table = 'home_slider';
     private $wpbd;
 
     function __construct(){
@@ -19,25 +19,25 @@ class LTE_Homes_Slider_Model{
     }
 
     //Tworzenie nowej tabeli w bazie danych
-    function createDBtable(){
+    function createDbTable(){
 
         $table_name = $this->getTableName();
 
         $sql = '
-            CREATE TABLE '.$table_name.' (
-            id INT NOT NULL AUTO_INCREMENT,
-            slide_url varchar(255) NOT NULL,
-            title varchar(255) NOT NULL,
-            caption varchar(255) DEFAULT NULL,
-            read_more_url varchar(255) DEFAULT NULL,
-            position INT NOT NULL,
-            published enum("yes", "no") NOT NULL DEFAULT "yes",
-            PRIMARY KEY  (id)
-	        ) ENGINE = InnoDB DEFAULT CHARSET = utf8';
+            CREATE TABLE IF NOT EXISTS '.$table_name.'(
+                id INT NOT NULL AUTO_INCREMENT,
+                slide_url VARCHAR(255) NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                caption VARCHAR(255) DEFAULT NULL,
+                read_more_url VARCHAR(255) DEFAULT NULL,
+                position INT NOT NULL,
+                published enum("yes", "no") NOT NULL DEFAULT "yes",
+                PRIMARY KEY(id)
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8';
 
-        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-        dbDelta( $sql );
+        require_once ABSPATH.'wp-admin/includes/upgrade.php';
 
+        dbDelta($sql);
     }
 
     //Sprawdza czy podana przez użytkownika pozycja slajdu jest wolna w bazie
@@ -114,6 +114,7 @@ class LTE_Homes_Slider_Model{
         return $result;
     }
 
+    //PAGINACJA NAS STRONIE Z TABELKĄ SLAJDÓW
     function get_pagination($curr_page, $limit = 10, $order_by = 'id', $order_dir = 'asc'){
 
         $table_name = $this->getTableName();
@@ -190,6 +191,28 @@ class LTE_Homes_Slider_Model{
         $sql = "UPDATE {$table_name} SET published = '{$changeTo}' WHERE id IN ({$ids_str})";
 
         return ($this->wpbd->query($sql));
+
+    }
+
+
+    public function get_slides(){
+
+        $table_name = $this->getTableName();
+
+        $sql = "SELECT * FROM {$table_name} WHERE published = 'yes' ORDER BY position";
+
+        $all_slides = $this->wpbd->get_results($sql);
+
+        return $all_slides;
+    }
+
+    public function drop_table(){
+
+        $table_name = $this->getTableName();
+        $sql = "DROP TABLE {$table_name}";
+
+        return ($this->wpbd->query($sql));
+
 
     }
 

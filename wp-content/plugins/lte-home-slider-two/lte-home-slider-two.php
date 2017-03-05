@@ -17,6 +17,7 @@ require_once 'libs/LTEHomesSlider_Model.php';
 require_once 'libs/LTE_SlideEntity.php';
 require_once 'libs/Pagination.php';
 require_once 'libs/Request.php';
+require_once 'libs/functions.php';
 
 
 //Główna klasa wtyczki - kontroler wtyczki
@@ -36,6 +37,9 @@ class LTE_home_slider{
 
         //Urachamianie podczas aktywacji pluginu
         register_activation_hook(__FILE__, array($this, 'onActivate'));
+
+        //Uruchamiany podczas desinstalacji pluginu
+        register_activation_hook(__FILE__, array('LTE_home_slider', 'onUninstall'));
 
         //Rejestracja admin menu dla wtyczki
         add_action('admin_menu', array($this, 'create_admin_menu') );
@@ -99,6 +103,16 @@ class LTE_home_slider{
             }
         }
     }
+
+    static function onUninstall(){
+
+        $model = new LTE_Homes_Slider_Model();
+        $model->drop_table();
+        $ver_opt = static::$plugin_id.'-version';
+        delete_option($ver_opt);
+
+    }
+
 
 
     //Mechanizm routingu + obsługa poszczególnych widoków Główny kontroler pluginu
