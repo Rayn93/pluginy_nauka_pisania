@@ -1,0 +1,71 @@
+.modal_box{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url("959315607.jpg") no-repeat;
+    background-size: cover;
+    z-index: 10000;
+}
+
+.modal_box .close_button{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.modal_box .info_box{
+    width: 50%;
+    height: 250px;
+    margin-top: 200px;
+    margin-left: 10%;
+    padding: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.modal_box .info_box h2{
+    font-size: 50px;
+    font-weight: bold;
+    line-height: 50px;
+}
+
+.modal_box .info_box h3{
+    font-size: 35px;
+    color: #ee5646;
+    font-weight: bold;
+    padding: 20px 0;
+    line-height: 44px;
+}
+
+.modal_box .info_box h5{
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 0;
+}
+
+.modal_box .info_box .email-input{
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+    border: 2px solid #505050;
+}
+
+.modal_box .info_box .submit_input{
+    display: block;
+    margin: 30px auto;
+    padding: 15px 35px;
+    font-size: 30px;
+    font-weight: bold;
+    background: #fff;
+    border: 2px solid #ee5646;
+    color: #ee5646;
+    transition: .5s;
+}
+
+.modal_box .info_box .submit_input:hover{
+    background: #ee5646;
+    color: #fff;
+    cursor: pointer;
+}
